@@ -1,0 +1,59 @@
+{
+  "name": "code-context-logger",
+  "displayName": "Code Context Logger",
+  "description": "Logs code context and pushes to GitHub.",
+  "version": "1.0.0",
+  "publisher": "YourName",
+  "engines": {
+      "vscode": "^1.60.0"
+  },
+  "activationEvents": [
+      "onCommand:code-context-logger.startLogging",
+      "onCommand:code-context-logger.stopLogging",
+      "onCommand:code-context-logger.setupGit",
+      "onCommand:code-context-logger.startAutoCommit",
+      "onCommand:code-context-logger.stopAutoCommit",
+      "onCommand:code-context-logger.manualPush"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+      "commands": [
+          {
+              "command": "code-context-logger.startLogging",
+              "title": "Start Code Context Logging"
+          },
+          {
+              "command": "code-context-logger.stopLogging",
+              "title": "Stop Code Context Logging"
+          },
+          {
+              "command": "code-context-logger.setupGit",
+              "title": "Setup GitHub Repository"
+          },
+          {
+              "command": "code-context-logger.startAutoCommit",
+              "title": "Start Auto-Commit"
+          },
+          {
+              "command": "code-context-logger.stopAutoCommit",
+              "title": "Stop Auto-Commit"
+          },
+          {
+              "command": "code-context-logger.manualPush",
+              "title": "Manually Push Logs to GitHub"
+          }
+      ]
+  },
+  "scripts": {
+      "compile": "tsc -p ./",
+      "watch": "tsc -watch -p ./",
+      "package": "vsce package"
+  },
+  "dependencies": {
+      "simple-git": "^3.0.0"
+  },
+  "devDependencies": {
+      "@types/vscode": "^1.60.0",
+      "typescript": "^4.4.3"
+  }
+}
