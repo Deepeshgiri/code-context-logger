@@ -4,6 +4,7 @@ import { logCodeContext } from './logger';
 
 let intervalId: NodeJS.Timeout | undefined;
 let outputChannel: vscode.OutputChannel;
+let lastLoggedMessage: string | undefined; // Keep track of the last logged message
 
 export function activate(context: vscode.ExtensionContext) {
     console.log('Extension "code-context-logger" is now active!');
@@ -22,12 +23,17 @@ export function activate(context: vscode.ExtensionContext) {
         outputChannel.show(true);
         outputChannel.appendLine('Code context logging started.');
 
-        // Start logging every 5 seconds
+        // Start logging when changes are detected
         intervalId = setInterval(() => {
             const logMessage = logCodeContext();
-            outputChannel.appendLine(logMessage);
-            commitAndPush(outputChannel, logMessage);
-        }, 5000);
+            
+            // If there is a change and it's not a duplicate log, log the message
+            if (logMessage && logMessage !== lastLoggedMessage) {
+                outputChannel.appendLine(logMessage);
+                commitAndPush(outputChannel, logMessage);
+                lastLoggedMessage = logMessage;  // Update the last logged message
+            }
+        }, 300000); // 5 minutes in milliseconds
     });
 
     // Register the stop logging command
